@@ -18,6 +18,8 @@ Start by adding this script tag to your `html` file's `head` element:
 
 ### Simplest possible usage
 
+See `basic_demo.html` for a full working example.
+
 Add a video element to your HTML:
 
 `<video id="video" muted playsinline webkit-playsinline></video>`
@@ -34,8 +36,6 @@ MadingtonStreamedby({
 ```
 
 With this setup, the video will automatically start playing. The video element will behave as a normal video element. You can style it as you would normally do.
-
-See `basic_demo.html` for a full working example.
 
 ### More advanced usage
 
