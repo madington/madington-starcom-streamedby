@@ -16,6 +16,12 @@ Start by adding this script tag to your `html` file's `head` element:
 
 `<script src="https://delivered-by-madington.com/streamedby/strcm/madington_streamedby.js"></script>`
 
+### Example video streams
+
+- 1613998401486-3o6097 (Snowboarder)
+- 1613998784760-1dpqqx (Paraglider)
+- 1613998830989-ib4uxp (Manta ray)
+
 ### Simplest possible usage
 
 See `basic_demo.html` for a full working example.
@@ -35,13 +41,7 @@ MadingtonStreamedby({
 });
 ```
 
-With this setup, the video will automatically start playing. The video element will behave as a normal video element. You can style it as you would normally do.
-
-### Example video streams
-
-- 1613998401486-3o6097 (Snowboarder)
-- 1613998784760-1dpqqx (Paraglider)
-- 1613998830989-ib4uxp (Manta ray)
+With this setup, the video will automatically start playing. You can style the video element it as you would normally do and you can use all of the normal HTMLMediaElement APIs.
 
 ### More advanced usage
 
