@@ -57,19 +57,20 @@ MadingtonStreamedby({
   fallbackFunction: noAutoPlayFallback, // Function to init some kind of a fallback when autoplay is not possible
   timesToPlay: 4, // This will make the video loop and play 4 times
   shouldAutoPlay: true, //if set to false, you will have to call videoElem.play() to start the video playback
+  usePoster: false // A poster will not be automatically added.
 });
 ```
 
 #### Full list of options
 
 - `videoElem` (String or selector) (mandatory): can be a string selector (".video", "#myvideo") or a javascript reference to a video element.
-- `stream` (String or Object)(mandatory): can be either a string ID or a stream object. To get the JSON object, go to https://ibv.streamedby.com/stream/${stream} (replace the string after "stream/" with your "ID").
-  It can be useful to have the stream object in your code in order to get access to the poster images etc. It also saves the creative from an extra http request which it will have to do if you only input a string ID.
+- `stream` (String)(mandatory): a string ID
 - `shouldAutoPlay` (boolean): Defaults to true. If set to false you will have to call videoElement.play() in order to start the video.
 - `timesToPlay` (Integer): Use this if you want to override the number of times the video should play/loop.
 - `shouldAutoLoop`(boolean): Defaults to true. If set to false the video will only play once. If set to true it will play as many times as possible within 30 seconds or as many times as set in the `timesToPlay` argument.
 - `fallbackFunction`(function): When autoplay is not possible this function will be called if one is provided. Useful if you want to display a backup ad or a play button etc.
 - `streamedbyCallback`(function): A function that will be called when Streamedby is ready to play. Use this to do additional setup
+- `usePoster`(boolean): Defaults to `true`. By default Streamedby sets a screenshot of the first frame of the video as a poster for the video element. Set this option to `false` to disable that.
 
 #### Polite loading
 
