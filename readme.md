@@ -37,6 +37,12 @@ MadingtonStreamedby({
 
 With this setup, the video will automatically start playing. The video element will behave as a normal video element. You can style it as you would normally do.
 
+### Example video streams
+
+- 1613998401486-3o6097 (Snowboarder)
+- 1613998784760-1dpqqx (Paraglider)
+- 1613998830989-ib4uxp (Manta ray)
+
 ### More advanced usage
 
 Please see `enabler_demo.html` for a more advanced example of how to implement Streamedby.
