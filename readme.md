@@ -41,7 +41,7 @@ MadingtonStreamedby({
 });
 ```
 
-With this setup, the video will automatically start playing. You can style the video element it as you would normally do and you can use all of the normal HTMLMediaElement APIs.
+With this setup, the video will automatically start playing. You can style the video element as you would normally do and you can use all of the normal HTMLMediaElement APIs.
 
 ### More advanced usage
 
