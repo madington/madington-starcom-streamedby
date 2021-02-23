@@ -74,7 +74,7 @@ MadingtonStreamedby({
 
 #### Polite loading
 
-Since video's usually are quite heavy in kilobytes it is a good idea to use polite loading (i.e. only load the video until the parent page is fully loaded). See `enabler_demo.html` for an example of this using Google Doubleclick's `enabler.js`.
+Since videos usually are quite heavy (in kilobytes) it is a good idea to use polite loading – i.e. only load the video until the parent page is fully loaded. See `enabler_demo.html` for an example of this using Google Doubleclick's `enabler.js`.
 
 #### Player UI
 
