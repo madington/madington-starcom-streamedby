@@ -63,8 +63,8 @@ MadingtonStreamedby({
 
 #### Full list of options
 
-- `videoElem` (String or selector) (mandatory): can be a string selector (".video", "#myvideo") or a javascript reference to a video element.
-- `stream` (String)(mandatory): a string ID
+- `videoElem` (String or Element) (mandatory): can be a string selector (".video", "#myvideo") or a javascript reference to a video element.
+- `stream` (String)(mandatory): a string ID. This will be provided by Madington.
 - `shouldAutoPlay` (boolean): Defaults to true. If set to false you will have to call videoElement.play() in order to start the video.
 - `timesToPlay` (Integer): Use this if you want to override the number of times the video should play/loop.
 - `shouldAutoLoop`(boolean): Defaults to true. If set to false the video will only play once. If set to true it will play as many times as possible within 30 seconds or as many times as set in the `timesToPlay` argument.
@@ -90,3 +90,7 @@ In it's basic form Streamedby doesn't come with a built in player UI. It will, t
 "streamedby-ended",
 "streamedby-completed"
 ```
+
+## Contact
+
+Contact pontus.armini@madington.com for questions, help or feature requests.
