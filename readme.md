@@ -16,12 +16,6 @@ Start by adding this script tag to your `html` file's `head` element:
 
 `<script src="https://delivered-by-madington.com/streamedby/strcm/madington_streamedby.js"></script>`
 
-### Example video streams
-
-- 1613998401486-3o6097 (Snowboarder)
-- 1613998784760-1dpqqx (Paraglider)
-- 1613998830989-ib4uxp (Manta ray)
-
 ### Simplest possible usage
 
 See `basic_demo.html` for a full working example.
@@ -90,6 +84,12 @@ In it's basic form Streamedby doesn't come with a built in player UI. It will, t
 "streamedby-ended",
 "streamedby-completed"
 ```
+
+### Example video streams
+
+- 1613998401486-3o6097 (Snowboarder)
+- 1613998784760-1dpqqx (Paraglider)
+- 1613998830989-ib4uxp (Manta ray)
 
 ## Contact
 
