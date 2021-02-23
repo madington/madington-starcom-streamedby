@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Enabler demo with buttons</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://s0.2mdn.net/ads/studio/Enabler.js"></script>
+    <script src="https://delivered-by-madington.com/streamedby/strcm/madington_streamedby.js"></script>
+    <style media="screen">
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .video-wrap {
+        position: relative;
+      }
+      .video {
+        width: 100vw;
+        max-width: 1210px;
+      }
+      .madbtn {
+        font-size: 10px;
+        box-sizing: border-box;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.4);
+        background-repeat: no-repeat;
+        cursor: pointer;
+        opacity: 0.85;
+        transition: opacity 0.2s ease;
+      }
+
+      .madbtn:focus,
+      .madbtn:hover {
+        opacity: 1;
+      }
+
+      :root {
+        --btn-margin: 8px;
+        --btnsize: 32px;
+      }
+
+      .control-panel {
+        position: absolute;
+        z-index: 1000;
+        opacity: 0;
+        display: none;
+        transition: opacity 0.5s ease-in;
+      }
+
+      .control-panel,
+      .control-panel.topleft {
+        top: 8px;
+        top: var(--btn-margin);
+        left: 8px;
+        left: var(--btn-margin);
+        bottom: auto;
+        right: auto;
+      }
+
+      .show-control-panel .control-panel {
+        opacity: 1;
+        display: block;
+      }
+
+      .btn-play-controls,
+      .btn-sound {
+        float: left;
+        width: 24px;
+        width: var(--btnsize);
+        height: 24px;
+        height: var(--btnsize);
+      }
+
+      .btn-sound {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MCA3Ny43MjciPjxwYXRoIGQ9Ik0wIDUxLjEzNVYyNi41OTFhMy45MzIgMy45MzIgMCAwMTEuMjE1LTIuODc3QTMuOTMyIDMuOTMyIDAgMDE0LjA5MSAyMi41aDE2Ljc0N0w0Mi4xMjMgMS4yMTRhNC4wMTQgNC4wMTQgMCAwMTUuNzUzIDBBMy45MzUgMy45MzUgMCAwMTQ5LjA5IDQuMDl2NjkuNTQ1YTQuMDY4IDQuMDY4IDAgMDEtNi45NjcgMi44NzZMMjAuODM4IDU1LjIyNkg0LjA5MWEzLjkyNyAzLjkyNyAwIDAxLTIuODc2LTEuMjE1QTMuOTI3IDMuOTI3IDAgMDEwIDUxLjEzNXpNNTguMDM5IDUwLjExM2EzLjQ0MiAzLjQ0MiAwIDAxLjc2OC0yLjI2OSA3LjQ3OSA3LjQ3OSAwIDAxMS44NTQtMS42cTEuMDg0LS42NzEgMi4xNzMtMS40N2E2LjQ0MiA2LjQ0MiAwIDAwMS44NTQtMi4yNjkgNy44MTcgNy44MTcgMCAwMC43NjctMy42NDIgNy44MiA3LjgyIDAgMDAtLjc2OC0zLjY0MyA2LjQ1NSA2LjQ1NSAwIDAwLTEuODU0LTIuMjY5cS0xLjA4OS0uOC0yLjE3My0xLjQ3YTcuNDYzIDcuNDYzIDAgMDEtMS44NTQtMS42IDMuNDQgMy40NCAwIDAxLS43NjgtMi4yNjkgMy45IDMuOSAwIDAxMS4yMTYtMi45MDggMy45ODMgMy45ODMgMCAwMTIuODc2LTEuMTgzIDMuNTY5IDMuNTY5IDAgMDExLjYuMzIgMTQuNyAxNC43IDAgMDE3LjE5MSA1Ljk0NSAxNi40NjYgMTYuNDY2IDAgMDEwIDE4LjEyMSAxNS4xMDkgMTUuMTA5IDAgMDEtNy4xOTEgNS45NzcgMy41NDkgMy41NDkgMCAwMS0xLjYuMzIgMy45NzcgMy45NzcgMCAwMS0yLjg3Ni0xLjE4MyAzLjkgMy45IDAgMDEtMS4yMTUtMi45MDh6IiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTY0LjQzMiA2NS4xOThhNC4wNTYgNC4wNTYgMCAwMTIuNDkyLTMuNzcxIDM5LjgyIDM5LjgyIDAgMDA0Ljg1OC0yLjgxMiAyNC40NDMgMjQuNDQzIDAgMDAwLTM5LjUgMzkuODIgMzkuODIgMCAwMC00Ljg1OC0yLjgxMiA0LjA1NCA0LjA1NCAwIDAxLTIuNDkyLTMuNzcxIDQuMTQ2IDQuMTQ2IDAgMDE0LjA4OS00LjA5MSA0LjYwNiA0LjYwNiAwIDAxMS42NjMuMzIgMzEuNTQ1IDMxLjU0NSAwIDAxMTQuMzgyIDEyLjA0NCAzMi43MjEgMzIuNzIxIDAgMDEwIDM2LjExNSAzMS41MzMgMzEuNTMzIDAgMDEtMTQuMzgxIDEyLjA0OSA0LjQzNSA0LjQzNSAwIDAxLTEuNi4zMiA0IDQgMCAwMS0yLjk0Mi0xLjIxNSAzLjkyOSAzLjkyOSAwIDAxLTEuMjExLTIuODc2eiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==);
+        z-index: 100;
+        display: none;
+        background-size: 36% auto;
+        background-position: 53% 50%;
+      }
+
+      .streamedby-unmuted .btn-sound {
+        background-color: #fff;
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MCA3Ny43MjciPjxwYXRoIGQ9Ik0wIDUxLjEzNVYyNi41OTFhMy45MzIgMy45MzIgMCAwMTEuMjE1LTIuODc3QTMuOTMyIDMuOTMyIDAgMDE0LjA5MSAyMi41aDE2Ljc0N0w0Mi4xMjMgMS4yMTRhNC4wMTQgNC4wMTQgMCAwMTUuNzUzIDBBMy45MzUgMy45MzUgMCAwMTQ5LjA5IDQuMDl2NjkuNTQ1YTQuMDY4IDQuMDY4IDAgMDEtNi45NjcgMi44NzZMMjAuODM4IDU1LjIyNkg0LjA5MWEzLjkyNyAzLjkyNyAwIDAxLTIuODc2LTEuMjE1QTMuOTI3IDMuOTI3IDAgMDEwIDUxLjEzNXpNNTguMDM5IDUwLjExM2EzLjQ0MiAzLjQ0MiAwIDAxLjc2OC0yLjI2OSA3LjQ3OSA3LjQ3OSAwIDAxMS44NTQtMS42cTEuMDg0LS42NzEgMi4xNzMtMS40N2E2LjQ0MiA2LjQ0MiAwIDAwMS44NTQtMi4yNjkgNy44MTcgNy44MTcgMCAwMC43NjctMy42NDIgNy44MiA3LjgyIDAgMDAtLjc2OC0zLjY0MyA2LjQ1NSA2LjQ1NSAwIDAwLTEuODU0LTIuMjY5cS0xLjA4OS0uOC0yLjE3My0xLjQ3YTcuNDYzIDcuNDYzIDAgMDEtMS44NTQtMS42IDMuNDQgMy40NCAwIDAxLS43NjgtMi4yNjkgMy45IDMuOSAwIDAxMS4yMTYtMi45MDggMy45ODMgMy45ODMgMCAwMTIuODc2LTEuMTgzIDMuNTY5IDMuNTY5IDAgMDExLjYuMzIgMTQuNyAxNC43IDAgMDE3LjE5MSA1Ljk0NSAxNi40NjYgMTYuNDY2IDAgMDEwIDE4LjEyMSAxNS4xMDkgMTUuMTA5IDAgMDEtNy4xOTEgNS45NzcgMy41NDkgMy41NDkgMCAwMS0xLjYuMzIgMy45NzcgMy45NzcgMCAwMS0yLjg3Ni0xLjE4MyAzLjkgMy45IDAgMDEtMS4yMTUtMi45MDh6Ii8+PHBhdGggZD0iTTY0LjQzMiA2NS4xOThhNC4wNTYgNC4wNTYgMCAwMTIuNDkyLTMuNzcxIDM5LjgyIDM5LjgyIDAgMDA0Ljg1OC0yLjgxMiAyNC40NDMgMjQuNDQzIDAgMDAwLTM5LjUgMzkuODIgMzkuODIgMCAwMC00Ljg1OC0yLjgxMiA0LjA1NCA0LjA1NCAwIDAxLTIuNDkyLTMuNzcxIDQuMTQ2IDQuMTQ2IDAgMDE0LjA4OS00LjA5MSA0LjYwNiA0LjYwNiAwIDAxMS42NjMuMzIgMzEuNTQ1IDMxLjU0NSAwIDAxMTQuMzgyIDEyLjA0NCAzMi43MjEgMzIuNzIxIDAgMDEwIDM2LjExNSAzMS41MzMgMzEuNTMzIDAgMDEtMTQuMzgxIDEyLjA0OSA0LjQzNSA0LjQzNSAwIDAxLTEuNi4zMiA0IDQgMCAwMS0yLjk0Mi0xLjIxNSAzLjkyOSAzLjkyOSAwIDAxLTEuMjExLTIuODc2eiIvPjwvc3ZnPg==);
+      }
+
+      .btn-play-controls {
+        margin-left: 4px;
+        margin-left: calc(var(--btn-margin) / 2);
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjZmZmIiBmaWxsLXJ1bGU9Im5vbnplcm8iPjxwYXRoIGQ9Ik0xMi40OSA5OC4zOTZDNS42MjMgMTAyLjIzIDAgOTguOTUyIDAgOTEuMTE4VjguNzIzQzAgLjg0NCA1LjU1Ni0yLjI3OCAxMi4yMjMgMS43NzhsNzAuOTgzIDQyLjY3YzYuNzQ1IDQuMDU2IDYuNjY3IDEwLjUzNC0uMjIyIDE0LjQ0NUwxMi40OSA5OC4zOTZ6TTY5LjQzNSA0OTYuMDI0QTQ4LjY3MiA0OC42NzIgMCAwMTUwLjAyNyA1MDBhNDkuNjgyIDQ5LjY4MiAwIDAxLTIxLjI5Ny00LjcyNSA0OC45MjIgNDguOTIyIDAgMDEtMTcuMTk2LTEzLjMyIDIuMTM2IDIuMTM2IDAgMDEtLjQ4OS0xLjQ2NWMuMDA5LS41MTMuMjMzLS45OTguNjE4LTEuMzM3bDguOTIzLTguOTg4YTIuNDkzIDIuNDkzIDAgMDExLjYyNC0uNTg1Yy41OS4wMyAxLjE0LjMxNSAxLjUwMS43ODNhMzMuMDAyIDMzLjAwMiAwIDAwMjYuMzE2IDEyLjk2MiAzMi41MDcgMzIuNTA3IDAgMDAxMi45MjktMi42MzcgMzMuMzM1IDMzLjMzNSAwIDEwLTM1LjY2Mi01NS4xM2w4Ljk4OSA4Ljk4M2EzLjcwMiAzLjcwMiAwIDAxLjkxMSA0LjQ5NCAzLjg5MyAzLjg5MyAwIDAxLTMuODQzIDIuNjA5SDQuMTcyYTQuMjI0IDQuMjI0IDAgMDEtNC4xNjgtNC4xN3YtMjkuMTc4YTMuODk2IDMuODk2IDAgMDEyLjU0My0zLjg0IDMuNzU5IDMuNzU5IDAgMDE0LjU2LjkxbDguNDY4IDguNDA0YTUwLjU3IDUwLjU3IDAgMDExNS45MjItMTAuMTk0YzI1LjI4NS0xMC4wOTggNTQgMS45MDYgNjQuNTc0IDI2Ljk5NWE0OS45NjYgNDkuOTY2IDAgMDEtMjYuNjM2IDY1LjQ1M3oiLz48cmVjdCB4PSI1MCIgeT0iMjAwIiB3aWR0aD0iMjcuMzE1IiBoZWlnaHQ9IjEwMCIgcng9IjUiLz48cmVjdCB5PSIyMDAiIHdpZHRoPSIyNy4zMTUiIGhlaWdodD0iMTAwIiByeD0iNSIvPjwvZz48L3N2Zz4=);
+        background-size: 40% auto;
+        background-position: 59% 50%;
+      }
+
+      .btn-play {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3OS4zOSA5MCI+PHBhdGggZD0iTTExLjI0IDg4LjU1QzUuMDYgOTIgMCA4OS4wNSAwIDgyVjcuODVDMCAuNzYgNS0yLjA1IDExIDEuNkw3NC44OCA0MGM2LjA3IDMuNjUgNiA5LjQ4LS4yIDEzeiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==);
+        background-size: 34% auto;
+        background-position: 58% 48%;
+        width: 8em;
+        height: 8em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+      }
+
+      .btn-play,
+      .streamedby-playing .btn-play {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .streamedby-no-autoplay .btn-play-controls,
+      .streamedby-no-autoplay .btn-sound {
+        opacity: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .streamedby-no-autoplay .btn-play {
+        opacity: 0.85;
+        pointer-events: auto;
+        z-index: 1000;
+      }
+
+      .streamedby-no-autoplay .fallback {
+        opacity: 1;
+      }
+
+      .audio .btn-sound {
+        display: block;
+      }
+
+      .no-audio .btn-play-controls {
+        margin-left: 0;
+      }
+
+      .no-audio .btn-sound,
+      .no-audio .btn-sound-on {
+        display: none;
+      }
+
+      .streamedby-playing .btn-play-controls {
+        background-size: 36% auto;
+        background-position: 57% 50%;
+      }
+
+      .streamedby-pause .btn-play-controls,
+      .streamedby-playing .btn-play-controls,
+      .streamedby-stalled .btn-play-controls {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjZmZmIiBmaWxsLXJ1bGU9Im5vbnplcm8iPjxwYXRoIGQ9Ik0xMi40OSA5OC4zOTZDNS42MjMgMTAyLjIzIDAgOTguOTUyIDAgOTEuMTE4VjguNzIzQzAgLjg0NCA1LjU1Ni0yLjI3OCAxMi4yMjMgMS43NzhsNzAuOTgzIDQyLjY3YzYuNzQ1IDQuMDU2IDYuNjY3IDEwLjUzNC0uMjIyIDE0LjQ0NUwxMi40OSA5OC4zOTZ6TTY5LjQzNSA0OTYuMDI0QTQ4LjY3MiA0OC42NzIgMCAwMTUwLjAyNyA1MDBhNDkuNjgyIDQ5LjY4MiAwIDAxLTIxLjI5Ny00LjcyNSA0OC45MjIgNDguOTIyIDAgMDEtMTcuMTk2LTEzLjMyIDIuMTM2IDIuMTM2IDAgMDEtLjQ4OS0xLjQ2NWMuMDA5LS41MTMuMjMzLS45OTguNjE4LTEuMzM3bDguOTIzLTguOTg4YTIuNDkzIDIuNDkzIDAgMDExLjYyNC0uNTg1Yy41OS4wMyAxLjE0LjMxNSAxLjUwMS43ODNhMzMuMDAyIDMzLjAwMiAwIDAwMjYuMzE2IDEyLjk2MiAzMi41MDcgMzIuNTA3IDAgMDAxMi45MjktMi42MzcgMzMuMzM1IDMzLjMzNSAwIDEwLTM1LjY2Mi01NS4xM2w4Ljk4OSA4Ljk4M2EzLjcwMiAzLjcwMiAwIDAxLjkxMSA0LjQ5NCAzLjg5MyAzLjg5MyAwIDAxLTMuODQzIDIuNjA5SDQuMTcyYTQuMjI0IDQuMjI0IDAgMDEtNC4xNjgtNC4xN3YtMjkuMTc4YTMuODk2IDMuODk2IDAgMDEyLjU0My0zLjg0IDMuNzU5IDMuNzU5IDAgMDE0LjU2LjkxbDguNDY4IDguNDA0YTUwLjU3IDUwLjU3IDAgMDExNS45MjItMTAuMTk0YzI1LjI4NS0xMC4wOTggNTQgMS45MDYgNjQuNTc0IDI2Ljk5NWE0OS45NjYgNDkuOTY2IDAgMDEtMjYuNjM2IDY1LjQ1M3oiLz48cmVjdCB4PSI1MCIgeT0iMjAwIiB3aWR0aD0iMjcuMzE1IiBoZWlnaHQ9IjEwMCIgcng9IjUiLz48cmVjdCB5PSIyMDAiIHdpZHRoPSIyNy4zMTUiIGhlaWdodD0iMTAwIiByeD0iNSIvPjwvZz48L3N2Zz4=);
+      }
+
+      .streamedby-pause .btn-play-controls,
+      .streamedby-stalled .btn-play-controls {
+        background-size: 35% auto;
+        background-position: 58% -42%;
+      }
+
+      .streamedby-completed .btn-play-controls,
+      .streamedby-ended .btn-play-controls {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjZmZmIiBmaWxsLXJ1bGU9Im5vbnplcm8iPjxwYXRoIGQ9Ik0xMi40OSA5OC4zOTZDNS42MjMgMTAyLjIzIDAgOTguOTUyIDAgOTEuMTE4VjguNzIzQzAgLjg0NCA1LjU1Ni0yLjI3OCAxMi4yMjMgMS43NzhsNzAuOTgzIDQyLjY3YzYuNzQ1IDQuMDU2IDYuNjY3IDEwLjUzNC0uMjIyIDE0LjQ0NUwxMi40OSA5OC4zOTZ6TTY5LjQzNSA0OTYuMDI0QTQ4LjY3MiA0OC42NzIgMCAwMTUwLjAyNyA1MDBhNDkuNjgyIDQ5LjY4MiAwIDAxLTIxLjI5Ny00LjcyNSA0OC45MjIgNDguOTIyIDAgMDEtMTcuMTk2LTEzLjMyIDIuMTM2IDIuMTM2IDAgMDEtLjQ4OS0xLjQ2NWMuMDA5LS41MTMuMjMzLS45OTguNjE4LTEuMzM3bDguOTIzLTguOTg4YTIuNDkzIDIuNDkzIDAgMDExLjYyNC0uNTg1Yy41OS4wMyAxLjE0LjMxNSAxLjUwMS43ODNhMzMuMDAyIDMzLjAwMiAwIDAwMjYuMzE2IDEyLjk2MiAzMi41MDcgMzIuNTA3IDAgMDAxMi45MjktMi42MzcgMzMuMzM1IDMzLjMzNSAwIDEwLTM1LjY2Mi01NS4xM2w4Ljk4OSA4Ljk4M2EzLjcwMiAzLjcwMiAwIDAxLjkxMSA0LjQ5NCAzLjg5MyAzLjg5MyAwIDAxLTMuODQzIDIuNjA5SDQuMTcyYTQuMjI0IDQuMjI0IDAgMDEtNC4xNjgtNC4xN3YtMjkuMTc4YTMuODk2IDMuODk2IDAgMDEyLjU0My0zLjg0IDMuNzU5IDMuNzU5IDAgMDE0LjU2LjkxbDguNDY4IDguNDA0YTUwLjU3IDUwLjU3IDAgMDExNS45MjItMTAuMTk0YzI1LjI4NS0xMC4wOTggNTQgMS45MDYgNjQuNTc0IDI2Ljk5NWE0OS45NjYgNDkuOTY2IDAgMDEtMjYuNjM2IDY1LjQ1M3oiLz48cmVjdCB4PSI1MCIgeT0iMjAwIiB3aWR0aD0iMjcuMzE1IiBoZWlnaHQ9IjEwMCIgcng9IjUiLz48cmVjdCB5PSIyMDAiIHdpZHRoPSIyNy4zMTUiIGhlaWdodD0iMTAwIiByeD0iNSIvPjwvZz48L3N2Zz4=);
+        background-size: 40% auto;
+        background-position: 51% 130%;
+      }
+
+      .video::-webkit-media-controls,
+      .video::-webkit-media-controls-start-playback-button {
+        display: none !important;
+        -webkit-appearance: none;
+      }
+    </style>
+  </head>
+  <body class="show-control-panel audio">
+    <div class="banner">
+      <div class="video-wrap">
+        <!-- muted and playsinline/webkit-playsinline MUST be added to the video element -->
+        <video class="video" muted playsinline webkit-playsinline></video>
+        <div class="madbtn btn-play"></div>
+        <div class="control-panel">
+          <div class="madbtn btn-sound"></div>
+          <div class="madbtn btn-play-controls"></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      /*
+      Example video streams:
+      1613998401486-3o6097
+      1613998784760-1dpqqx
+      1613998830989-ib4uxp
+      */
+
+      /* Example dynamic code
+      Enabler.setProfileId(12345);
+      var devDynamicContent = {};
+      devDynamicContent.SampleElement = [{}];
+      devDynamicContent.SampleElement[0]._id = 0;
+      devDynamicContent.SampleElement[0].streamedbyID = "1613998401486-3o6097";
+      Enabler.setDevDynamicContent(devDynamicContent);
+      */
+
+      /* Save a reference to the video element */
+      var videoElem = document.querySelector(".video");
+
+      /* Wait for Enabler to initialize */
+      if (Enabler.isInitialized()) {
+        init();
+      } else {
+        Enabler.addEventListener(studio.events.StudioEvent.INIT, init);
+      }
+
+      // Runs when Enabler is ready.
+      function init() {
+        /* Add the video module to report video stats to Google */
+        Enabler.loadModule(studio.module.ModuleId.VIDEO, function() {
+          studio.video.Reporter.attach("video_1", videoElem);
+        });
+        /* Run polite loading */
+        if (Enabler.isPageLoaded()) {
+          politeInit();
+        } else {
+          Enabler.addEventListener(
+            studio.events.StudioEvent.PAGE_LOADED,
+            politeInit
+          );
+        }
+      }
+
+      // Runs when the page is completely loaded.
+      function politeInit() {
+        // Initialize Streamedby
+        MadingtonStreamedby({
+          videoElem: videoElem,
+          stream:
+            "1613998830989-ib4uxp" /* devDynamicContent.SampleElement[0].streamedbyID */,
+          streamedbyCallback: streamedbyCallback, // Callback that will run when Streamedby is ready
+          fallbackFunction: noAutoPlayFallback // Function to init some kind of a fallback when autoplay is not possible
+        });
+      }
+
+      function streamedbyCallback(streamedby) {
+        /* Streamedby is initialized */
+
+        /* Elements & variables */
+        var controlPanel = document.querySelector(".control-panel"),
+          playControlsBtn = document.querySelector(".btn-play-controls"),
+          soundBtn = document.querySelector(".btn-sound"),
+          currState = "pause";
+
+        /* Video element event listener */
+        var endedPausePlayListener = function(ev) {
+          if (currState !== ev.type) {
+            currState = ev.type;
+          }
+        };
+
+        /* Listen for events */
+        videoElem.addEventListener("pause", endedPausePlayListener);
+        videoElem.addEventListener("ended", endedPausePlayListener);
+        videoElem.addEventListener("playing", endedPausePlayListener);
+
+        /* Add a click listener to play/pause button */
+        playControlsBtn.addEventListener("click", function(e) {
+          e.stopPropagation();
+          switch (currState) {
+            case "playing":
+              videoElem.pause();
+              break;
+            case "pause":
+              videoElem.play();
+              break;
+            case "ended":
+              streamedby.replay();
+              break;
+          }
+        });
+
+        /* Sound button listener */
+        soundBtn.addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          streamedby.muted ? streamedby.unmute() : streamedby.mute();
+        });
+      }
+
+      function noAutoPlayFallback() {
+        /*
+          This function will be called if the video cannot autoplay.
+          This will, for example, happen in iOS if the phone is in battery save mode.
+          Use this function to show a fallback.
+          In this example a big play button will be shown if autoplay is not available.
+        */
+        var playBtn = document.querySelector(".btn-play");
+
+        playBtn.addEventListener("click", function(e) {
+          e.stopPropagation();
+          videoElem.play();
+        });
+      }
+    </script>
+  </body>
+</html>
