@@ -39,7 +39,7 @@ With this setup, the video will automatically start playing. You can style the v
 
 ### More advanced usage
 
-Please see `enabler_demo.html` for a more advanced example of how to implement Streamedby.
+Please see `doubleclick_enabler_demo.html` for a more advanced example of how to implement Streamedby.
 
 Examples of possible options:
 
@@ -68,11 +68,11 @@ MadingtonStreamedby({
 
 #### Polite loading
 
-Since videos usually are quite heavy (in kilobytes) it is a good idea to use polite loading – i.e. only load the video until the parent page is fully loaded. See `enabler_demo.html` for an example of this using Google Doubleclick's `enabler.js`.
+Since videos usually are quite heavy (in kilobytes) it is a good idea to use polite loading – i.e. only load the video until the parent page is fully loaded. See `doubleclick_enabler_demo.html` for an example of this using Google Doubleclick's `enabler.js`.
 
 #### Player UI
 
-In it's basic form Streamedby doesn't come with a built in player UI. It will, though, add and dynamically change stateful (and self-explanatory) classes to the body element depending on the state of the player. These classes can be used to create your own player UI. Please see `enabler_demo.html` for an example of this. The classes are:
+In it's basic form Streamedby doesn't come with a built in player UI. It will, though, add and dynamically change stateful (and self-explanatory) classes to the body element depending on the state of the player. These classes can be used to create your own player UI. Please see `doubleclick_enabler_demo.html` for an example of this. The classes are:
 
 ```
 "streamedby-no-autoplay",
