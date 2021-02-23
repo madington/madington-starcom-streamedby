@@ -93,4 +93,4 @@ In it's basic form Streamedby doesn't come with a built in player UI. It will, t
 
 ## Contact
 
-Contact pontus.armini@madington.com for questions, help or feature requests.
+Contact pontus.armini(at)madington.com for questions, help or feature requests.
