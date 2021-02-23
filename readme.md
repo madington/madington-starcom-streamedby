@@ -6,7 +6,7 @@ Streamedby is a video streaming solution for display ads developed by [Madington
 
 **Some of the features**:
 
-- Dynamically plays the best possible quality stream for each browser using the most modern available codec (AV1, H265, webm etc)
+- Dynamically plays the best possible quality stream for each browser using the most modern available codec (AV1, H265, Vp9 etc)
 - Automatically plays/pauses when the video is on/off screen enabling high quality playthrough statistics
 - Limits total file size to be below 4MB in order to comply with Chromes' Heavy Ad Intervention program.
 
