@@ -1,4 +1,4 @@
-# Madington Streamedby ad guide
+# Madington Streamedby creative guide
 
 ## Intro
 

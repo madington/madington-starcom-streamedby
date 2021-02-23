@@ -196,15 +196,19 @@
       */
 
       /* Example dynamic code
+
+      This is a basic example of how the stream ID could be delivered to the creative dynamically
+
       Enabler.setProfileId(12345);
       var devDynamicContent = {};
       devDynamicContent.SampleElement = [{}];
       devDynamicContent.SampleElement[0]._id = 0;
       devDynamicContent.SampleElement[0].streamedbyID = "1613998401486-3o6097";
       Enabler.setDevDynamicContent(devDynamicContent);
+
       */
 
-      /* Save a reference to the video element */
+      /* The video element */
       var videoElem = document.querySelector(".video");
 
       /* Wait for Enabler to initialize */
@@ -216,7 +220,7 @@
 
       // Runs when Enabler is ready.
       function init() {
-        /* Add the video module to report video stats to Google */
+        /* Add the video module to report video statistics to Google */
         Enabler.loadModule(studio.module.ModuleId.VIDEO, function() {
           studio.video.Reporter.attach("video_1", videoElem);
         });
@@ -233,11 +237,10 @@
 
       // Runs when the page is completely loaded.
       function politeInit() {
-        // Initialize Streamedby
+        // Initialize Streamedby politely. This is a good idea in order to comply with most publishers guidelines
         MadingtonStreamedby({
-          videoElem: videoElem,
-          stream:
-            "1613998830989-ib4uxp" /* devDynamicContent.SampleElement[0].streamedbyID */,
+          videoElem: videoElem, //the video element
+          stream: "1613998830989-ib4uxp", // In a dynamic setup this would be retrieved using something like devDynamicContent.SampleElement[0].streamedbyID
           streamedbyCallback: streamedbyCallback, // Callback that will run when Streamedby is ready
           fallbackFunction: noAutoPlayFallback // Function to init some kind of a fallback when autoplay is not possible
         });
